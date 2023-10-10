@@ -8,4 +8,4 @@ environment_variables:
   RAILS_ENV: test
 matcher:
   subjects:
-    - DaySchedule
+    - Booking::DaySchedule
