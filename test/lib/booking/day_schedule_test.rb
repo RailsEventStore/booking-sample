@@ -29,6 +29,15 @@ module Booking
       end
     end
 
+    test "cannot reserve partially covered slot, again" do
+      day_schedule = DaySchedule.new
+      day_schedule.reserve(at_12_00..at_13_00)
+
+      assert_raises DaySchedule::CannotReserve do
+        day_schedule.reserve(at_11_45..at_12_45)
+      end
+    end
+
     test "can reserve non-intersecting slots" do
       day_schedule = DaySchedule.new
       day_schedule.reserve(at_12_00..at_12_45)
@@ -46,6 +55,10 @@ module Booking
           duration: time_range.last - time_range.first
         }
       )
+    end
+
+    def at_11_45
+      Time.new(2023, 10, 10, 11, 45)
     end
 
     def at_12_00

@@ -28,7 +28,7 @@ module Booking
     end
 
     def cannot_reserve
-      raise CannotReserve.new
+      raise CannotReserve
     end
   end
 end
