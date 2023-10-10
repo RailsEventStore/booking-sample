@@ -2,11 +2,13 @@ module Booking
   class DaySchedule
     CannotReserve = Class.new(StandardError)
 
-    def initialize
+    def initialize(allowed_time_range)
       @reserved_slots = Set.new
+      @allowed_time_range = allowed_time_range
     end
 
     def reserve(time_range)
+      cannot_reserve unless allowed_time_range.cover?(time_range)
       cannot_reserve if reserved_slots.any?(covers?(time_range))
       reserved_slots << time_range
       visit_scheduled(time_range)
@@ -14,13 +16,15 @@ module Booking
 
     private
 
-    attr_reader :reserved_slots
+    attr_reader :reserved_slots, :allowed_time_range
 
     def visit_scheduled(time_range)
-      VisitScheduled.new(data: {
-        scheduled_at: time_range.first,
-        duration: time_range.last - time_range.first
-      })
+      VisitScheduled.new(
+        data: {
+          scheduled_at: time_range.first,
+          duration: time_range.last - time_range.first
+        }
+      )
     end
 
     def covers?(time_range)
