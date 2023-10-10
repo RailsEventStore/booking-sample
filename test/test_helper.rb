@@ -11,5 +11,10 @@ module ActiveSupport
     fixtures :all
 
     # Add more helper methods to be used by all tests here...
+
+    def assert_event(expected, actual)
+      assert_equal expected.event_type, actual.event_type
+      assert_equal expected.data, actual.data
+    end
   end
 end
