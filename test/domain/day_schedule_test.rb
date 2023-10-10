@@ -1,6 +1,8 @@
 require "test_helper"
 
 class DayScheduleTest < ActiveSupport::TestCase
+  cover DaySchedule
+
   test "happy path" do
     day_schedule = DaySchedule.new
 

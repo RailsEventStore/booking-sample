@@ -1,0 +1,11 @@
+integration:
+  name: minitest
+includes:
+  - test
+requires:
+  - ./config/environment
+environment_variables:
+  RAILS_ENV: test
+matcher:
+  subjects:
+    - DaySchedule
