@@ -50,6 +50,27 @@ module Booking
       assert_raises { day_schedule.reserve(delay_by(1.hour, open_hours)) }
     end
 
+    test "releasing reserved slot" do
+      day_schedule = DaySchedule.new(open_hours)
+      day_schedule.reserve(slot)
+
+      assert_event visit_released(slot), day_schedule.release(slot)
+    end
+
+    test "released slot can be taken again" do
+      day_schedule = DaySchedule.new(open_hours)
+      day_schedule.reserve(slot)
+      day_schedule.release(slot)
+
+      assert_nothing_raised { day_schedule.reserve(slot) }
+    end
+
+    test "cannot release non-reserved slot" do
+      day_schedule = DaySchedule.new(open_hours)
+
+      assert_raises(DaySchedule::CannotRelease) { day_schedule.release(slot) }
+    end
+
     private
 
     def slot
@@ -70,6 +91,15 @@ module Booking
 
     def visit_scheduled(time_range)
       VisitScheduled.new(
+        data: {
+          scheduled_at: time_range.first,
+          duration: time_range.last - time_range.first
+        }
+      )
+    end
+
+    def visit_released(time_range)
+      VisitReleased.new(
         data: {
           scheduled_at: time_range.first,
           duration: time_range.last - time_range.first
