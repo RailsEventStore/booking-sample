@@ -10,7 +10,7 @@ module Booking
     def reserve(time_range)
       cannot_reserve unless allowed_time_range.cover?(time_range)
       cannot_reserve if reserved_slots.any?(cover?(time_range))
-      reserved_slots << time_range
+      reserved_slots.add(time_range)
       visit_scheduled(time_range)
     end
 
