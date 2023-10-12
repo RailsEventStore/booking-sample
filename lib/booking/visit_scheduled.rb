@@ -1,4 +1,3 @@
 module Booking
-  class VisitScheduled < RailsEventStore::Event
-  end
+  VisitScheduled = Class.new(RailsEventStore::Event)
 end
