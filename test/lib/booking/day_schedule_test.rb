@@ -90,7 +90,7 @@ module Booking
     end
 
     def visit_scheduled(time_range)
-      VisitScheduled.new(
+      ScheduleReserved.new(
         data: {
           scheduled_at: time_range.first,
           duration: time_range.last - time_range.first
@@ -99,7 +99,7 @@ module Booking
     end
 
     def visit_released(time_range)
-      VisitReleased.new(
+      ScheduleReleased.new(
         data: {
           scheduled_at: time_range.first,
           duration: time_range.last - time_range.first
