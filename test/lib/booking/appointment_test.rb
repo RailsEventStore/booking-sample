@@ -135,19 +135,39 @@ module Booking
     end
 
     def appointment_proposed
-      AppointmentProposed.new(data: { id: appointment_id, proposed_at: current_time })
+      AppointmentProposed.new(
+        data: {
+          id: appointment_id,
+          proposed_at: current_time
+        }
+      )
     end
 
     def appointment_accepted
-      AppointmentAccepted.new(data: { id: appointment_id, accepted_at: current_time })
+      AppointmentAccepted.new(
+        data: {
+          id: appointment_id,
+          accepted_at: current_time
+        }
+      )
     end
 
     def appointment_rejected
-      AppointmentRejected.new(data: { id: appointment_id, rejected_at: current_time })
+      AppointmentRejected.new(
+        data: {
+          id: appointment_id,
+          rejected_at: current_time
+        }
+      )
     end
 
     def appointment_cancelled
-      AppointmentCancelled.new(data: { id: appointment_id, cancelled_at: current_time })
+      AppointmentCancelled.new(
+        data: {
+          id: appointment_id,
+          cancelled_at: current_time
+        }
+      )
     end
   end
 end
