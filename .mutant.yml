@@ -10,3 +10,4 @@ matcher:
   subjects:
     - Booking::DaySchedule
     - Booking::Appointment
+    - Booking::StateMachine
