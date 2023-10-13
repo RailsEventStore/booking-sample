@@ -1,9 +1,15 @@
 module Booking
-  ScheduleReleased = Class.new(RailsEventStore::Event)
-  ScheduleReserved = Class.new(RailsEventStore::Event)
+  Event = Data.define(:data, :event_type) do
+    def initialize(data: Hash.new)
+      super(data: data, event_type: self.class.name)
+    end
+  end
 
-  AppointmentProposed = Class.new(RailsEventStore::Event)
-  AppointmentAccepted = Class.new(RailsEventStore::Event)
-  AppointmentRejected = Class.new(RailsEventStore::Event)
-  AppointmentCancelled = Class.new(RailsEventStore::Event)
+  ScheduleReleased = Class.new(Event)
+  ScheduleReserved = Class.new(Event)
+
+  AppointmentProposed = Class.new(Event)
+  AppointmentAccepted = Class.new(Event)
+  AppointmentRejected = Class.new(Event)
+  AppointmentCancelled = Class.new(Event)
 end
