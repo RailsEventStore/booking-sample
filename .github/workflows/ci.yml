@@ -2,6 +2,8 @@ name: CI
 on: [push, pull_request]
 jobs:
   test:
+    environment:
+      RAILS_ENV: test
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -12,6 +14,8 @@ jobs:
     - run: bin/rails db:setup
     - run: bin/rails t
   mutate:
+    environment:
+      RAILS_ENV: test
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
