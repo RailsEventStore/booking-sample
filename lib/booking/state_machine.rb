@@ -1,19 +1,29 @@
 module Booking
   class StateMachine
-    def initialize(states)
-      states.each do |state|
-        define_singleton_method "#{state}?" do
-          @state == state
-        end
+    INITIAL = Data.define
 
+    def initialize(states, on_error)
+      @states = states
+      @current_state = INITIAL
+
+      states.each_key do |state|
         define_singleton_method "to_#{state}" do
-          @state = state
+          on_error.call unless valid_transition?(state)
+          @current_state = state
         end
       end
     end
 
-    def initial?
-      @state.nil?
+    private
+
+    attr_reader :current_state
+
+    def valid_transition?(next_state)
+      if current_state == INITIAL
+        @states.keys.first == next_state
+      else
+        @states.fetch(current_state).include?(next_state)
+      end
     end
   end
 end

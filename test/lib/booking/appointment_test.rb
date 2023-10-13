@@ -116,6 +116,14 @@ module Booking
       assert_raises(Appointment::Error) { appointment.cancel }
     end
 
+    test "cannot reject after cancel" do
+      appointment = new_appointment
+      appointment.propose
+      appointment.cancel
+
+      assert_raises(Appointment::Error) { appointment.reject }
+    end
+
     private
 
     def appointment_id
@@ -135,31 +143,19 @@ module Booking
     end
 
     def appointment_proposed
-      AppointmentProposed.new(
-        id: appointment_id,
-        proposed_at: current_time
-      )
+      AppointmentProposed.new(id: appointment_id, proposed_at: current_time)
     end
 
     def appointment_accepted
-      AppointmentAccepted.new(
-        id: appointment_id,
-        accepted_at: current_time
-      )
+      AppointmentAccepted.new(id: appointment_id, accepted_at: current_time)
     end
 
     def appointment_rejected
-      AppointmentRejected.new(
-        id: appointment_id,
-        rejected_at: current_time
-      )
+      AppointmentRejected.new(id: appointment_id, rejected_at: current_time)
     end
 
     def appointment_cancelled
-      AppointmentCancelled.new(
-        id: appointment_id,
-        cancelled_at: current_time
-      )
+      AppointmentCancelled.new(id: appointment_id, cancelled_at: current_time)
     end
   end
 end
