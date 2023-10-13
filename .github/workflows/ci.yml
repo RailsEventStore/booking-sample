@@ -2,7 +2,7 @@ name: CI
 on: [push, pull_request]
 jobs:
   test:
-    environment:
+    env:
       RAILS_ENV: test
     runs-on: ubuntu-latest
     steps:
@@ -14,7 +14,7 @@ jobs:
     - run: bin/rails db:setup
     - run: bin/rails t
   mutate:
-    environment:
+    env:
       RAILS_ENV: test
     runs-on: ubuntu-latest
     steps:
