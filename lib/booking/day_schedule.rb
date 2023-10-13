@@ -26,19 +26,15 @@ module Booking
 
     def visit_scheduled(time_range)
       ScheduleReserved.new(
-        data: {
-          scheduled_at: time_range.first,
-          duration: time_range.last - time_range.first
-        }
+        scheduled_at: time_range.first,
+        duration: time_range.last - time_range.first
       )
     end
 
     def visit_released(time_range)
       ScheduleReleased.new(
-        data: {
-          scheduled_at: time_range.first,
-          duration: time_range.last - time_range.first
-        }
+        scheduled_at: time_range.first,
+        duration: time_range.last - time_range.first
       )
     end
 

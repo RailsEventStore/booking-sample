@@ -6,7 +6,7 @@ module Booking
 
     test "propose" do
       appointment = new_appointment
-      assert_event appointment_proposed, appointment.propose
+      assert_domain_event appointment_proposed, appointment.propose
     end
 
     test "cannot propose twice" do
@@ -20,7 +20,7 @@ module Booking
       appointment = new_appointment
       appointment.propose
 
-      assert_event appointment_accepted, appointment.accept
+      assert_domain_event appointment_accepted, appointment.accept
     end
 
     test "cannot accept without proposal" do
@@ -40,7 +40,7 @@ module Booking
       appointment = new_appointment
       appointment.propose
 
-      assert_event appointment_rejected, appointment.reject
+      assert_domain_event appointment_rejected, appointment.reject
     end
 
     test "cannot reject without proposal" do
@@ -92,7 +92,7 @@ module Booking
       appointment = new_appointment
       appointment.propose
 
-      assert_event appointment_cancelled, appointment.cancel
+      assert_domain_event appointment_cancelled, appointment.cancel
     end
 
     test "cancel accepted appointment" do
@@ -100,7 +100,7 @@ module Booking
       appointment.propose
       appointment.accept
 
-      assert_event appointment_cancelled, appointment.cancel
+      assert_domain_event appointment_cancelled, appointment.cancel
     end
 
     test "cannot cancel rejected appointment" do
@@ -136,37 +136,29 @@ module Booking
 
     def appointment_proposed
       AppointmentProposed.new(
-        data: {
-          id: appointment_id,
-          proposed_at: current_time
-        }
+        id: appointment_id,
+        proposed_at: current_time
       )
     end
 
     def appointment_accepted
       AppointmentAccepted.new(
-        data: {
-          id: appointment_id,
-          accepted_at: current_time
-        }
+        id: appointment_id,
+        accepted_at: current_time
       )
     end
 
     def appointment_rejected
       AppointmentRejected.new(
-        data: {
-          id: appointment_id,
-          rejected_at: current_time
-        }
+        id: appointment_id,
+        rejected_at: current_time
       )
     end
 
     def appointment_cancelled
       AppointmentCancelled.new(
-        data: {
-          id: appointment_id,
-          cancelled_at: current_time
-        }
+        id: appointment_id,
+        cancelled_at: current_time
       )
     end
   end

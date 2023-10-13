@@ -13,9 +13,9 @@ module ActiveSupport
 
     # Add more helper methods to be used by all tests here...
 
-    def assert_event(expected, actual)
-      assert_equal expected.event_type, actual.event_type
-      assert_equal expected.data, actual.data
+    def assert_domain_event(expected, actual)
+      assert_equal expected.class, actual.class
+      assert_equal expected.deconstruct_keys(nil), actual.deconstruct_keys(nil)
     end
   end
 end

@@ -7,7 +7,7 @@ module Booking
     test "happy path" do
       day_schedule = DaySchedule.new(open_hours)
 
-      assert_event visit_scheduled(slot), day_schedule.reserve(slot)
+      assert_domain_event visit_scheduled(slot), day_schedule.reserve(slot)
     end
 
     test "cannot reserve same slot twice" do
@@ -41,7 +41,7 @@ module Booking
       day_schedule = DaySchedule.new(open_hours)
       day_schedule.reserve(rush_by(1.hour, slot))
 
-      assert_event visit_scheduled(slot), day_schedule.reserve(slot)
+      assert_domain_event visit_scheduled(slot), day_schedule.reserve(slot)
     end
 
     test "cannot reserve outside of open hours" do
@@ -54,7 +54,7 @@ module Booking
       day_schedule = DaySchedule.new(open_hours)
       day_schedule.reserve(slot)
 
-      assert_event visit_released(slot), day_schedule.release(slot)
+      assert_domain_event visit_released(slot), day_schedule.release(slot)
     end
 
     test "released slot can be taken again" do
@@ -91,19 +91,15 @@ module Booking
 
     def visit_scheduled(time_range)
       ScheduleReserved.new(
-        data: {
-          scheduled_at: time_range.first,
-          duration: time_range.last - time_range.first
-        }
+        scheduled_at: time_range.first,
+        duration: time_range.last - time_range.first
       )
     end
 
     def visit_released(time_range)
       ScheduleReleased.new(
-        data: {
-          scheduled_at: time_range.first,
-          duration: time_range.last - time_range.first
-        }
+        scheduled_at: time_range.first,
+        duration: time_range.last - time_range.first
       )
     end
   end
